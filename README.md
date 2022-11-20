@@ -1,4 +1,4 @@
-<!-- Just a test comment -->
+<!-- Add links to relevant .py files as crossreff to headers -->
 # Python-Notes
 
 This repository is a collection of intermediate Python concepts which I am currently studying.
@@ -52,7 +52,7 @@ There are **two types of objects**:
   * int, str, bool, ...
 
 If you try to **modify immutable objects** you **get new objects**. This can be easily shown via the [`id()`](https://docs.python.org/3/library/functions.html#id)
-function which returns the identity of an object (adress of the object in memory).
+function which returns the identity of an object (In CPython: adress of the object in memory).
 ```python
 x = 5
 s = "hi"
@@ -165,10 +165,54 @@ would return False, as the value `1000000`is not interned. Here, a new object wo
 
 NOTE: If you are using VSCode to check this, you might get different results. Try using the Python Terminal itself.
 <!-- Why is that? -->
+<!-- if i assign a name to a immutable object which already exists at a memory location it seems to be retrieved in VSCode --> 
 
 
 ## Pass by assignement
 
+**Pass:** Provide argument to a function
+
+**Pass by reference:** argument is a reference to a variable that already exists in memory
+
+**Pass by value:** argument becomes independent copy of original value
+
+**Pass by assignement**:
+```python
+def main():
+    x = 100
+    print(f"Initial adress of x: {id(x)}")
+    increment(x)
+    print(f"Final adress of x: {id(x)}")
+
+def increment(y):
+    print(f"Initial adress of y: {id(y)}")
+    y += 1
+    print(f"Final adress of y: {id(y)}")
+
+main()
+```
+This shows that the memory adress of `y` inside the `increment` function is initially the same as for `x`.
+One could maybe think of `y` as initially being `y = x` so `y is x`.
+Only after incrementing `y` the adress changes, since a new `PyObject` is created
+(as integers are immutable, `101` is created at a new adress). Therefore `y = x` is overridden with `y = 101`
+After the `increment` function is terminated, the local `y` name is cleaned up and only the global `x` name is adressed 
+(which of course has the same adress as before).
+
+
+### Pass by reference in Python
+
+So how do you pass by reference in Python? Easy, just return one or multiple arguments (default: returned as tuple, but also list or dict possible). 
+```python
+def main()
+    x = 0
+    s, x = f("Hello", x)
+    print(f"{s} {x}")
+    s, x = f("Hello", x)
+    print(f"{s} {x}")
+
+def f(a, x): 
+    return f"{a} World!", x+1
+```
 
 
 ## Pythons object model
@@ -193,9 +237,6 @@ code block
      * unordered 1.1.1
 2. 2
 3. 3
-
-
-## Pass by assignement
 
 
 ## Returning values
