@@ -35,13 +35,12 @@ print()
 ```
 
 There are **two types of objects**:
-* mutable
+* **mutable**
   * list, set, dict
-* immutable
+* **immutable**
   * int, str, bool, ...
 
-If you try to modify immutable objects you get a new objects. This can be easily shown
-via the [`id()`](https://docs.python.org/3/library/functions.html#id)
+If you try to **modify immutable objects** you **get new objects**. This can be easily shown via the [`id()`](https://docs.python.org/3/library/functions.html#id)
 function which returns the identity of an object (adress of the object in memory).
 ```python
 x = 5
@@ -55,7 +54,7 @@ print(x, id(x))
 print(s, id(s))
 ```
 
-For mutable objects the identity stays the same, as can be tested with:
+For **mutable objects** the **identity stays the same**, as can be tested with:
 ```python
 l = [1, 2, 3]
 print(l, id(l))
@@ -64,8 +63,8 @@ l.append(4)
 print(l, id(l))
 ```
 
-Actually the underlying implementation of variables and such is a `PyObject`.
-In short: [What is a `PyObject`?](https://stackoverflow.com/a/27683778)
+Actually the underlying implementation of variables and such is a **`PyObject`**
+[What is a `PyObject`?](https://stackoverflow.com/a/27683778)
 
 Each of these objects contains at least **three types of data**:
 * reference count
