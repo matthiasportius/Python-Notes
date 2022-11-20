@@ -21,7 +21,7 @@ def increment(x: int) -> None:
     print(f"   Final adress of x: {id(x)}")
 
 # ---"Pass by reference"---
-def greet(name, counter):
+def greet(name: str, counter: int) -> tuple[str, int]:
     # returned as tuple by default
     return f"Hi, {name}!", counter+1
 
