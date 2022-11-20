@@ -34,6 +34,17 @@ for o in l:
 print()
 ```
 
+Actually the underlying implementation of variables and such is a [**`PyObject`**](https://stackoverflow.com/a/27683778),
+which is also why Python has no pointers like C.
+Each of these objects contains at least **three types of data**:
+* reference count
+* type
+* value
+<!-- Add schema of a PyObject with its name here -->
+
+
+### Python objects
+
 There are **two types of objects**:
 * **mutable**
   * list, set, dict
@@ -63,16 +74,8 @@ l.append(4)
 print(l, id(l))
 ```
 
-Actually the underlying implementation of variables and such is a **`PyObject`**
-[What is a `PyObject`?](https://stackoverflow.com/a/27683778)
 
-Each of these objects contains at least **three types of data**:
-* reference count
-* type
-* value
-
-
-### Namespaces
+### Names, not variables
 
 In Python one does not create *variables* but *names*.
 When I do: `x = 1` these steps are performed:
@@ -99,7 +102,73 @@ So what happens when I re-assign the variable `x = 3` is:
 Doing `y = x` would not create a new object, just a new name that points to the 
 existing `PyObject`, increasing its refcount by 1.
 This can be tested with [`is`](https://stackoverflow.com/a/133024) 
-which checks if two names refer to the same object: `y is x` returns `True`
+which checks if two names refer to the same object: `y is x` returns `True`.
+`sys.getrefcount("1")` before and after the assignement shows the increase of the reference count by 1.
+
+
+### Namespaces
+
+As described before, `x = 1` creates a *symbolic name* `x` which can be used to reference the `PyObject`.
+With that `x` is collected in the __*namespace*__ together with its reference object. 
+The *namespace* is implemented as a dictionary with keys (object names) and values (objects).
+There are **4 types of namespaces** with different lifetimes:
+* **built-in**
+  * names of Python's built-in objects 
+  * creation: always available when Python is running
+  * lifetime: until interpreter terminates
+  * `dir(__builtins__)`
+* **global**
+  * names defined at level of main program
+  * creation: when main is started
+  * lifetime: until interpreter terminates
+  * `globals()`
+* **enclosing**
+  * names defined in the function enclosing the current function
+  * creation: when function executes
+  * lifetime: until function terminates
+* **local**
+  * names defined in the current function, *local to a function*
+  * creation: when function executes
+  * lifetime: until function terminates
+  * `locals()`
+
+Many namespaces will exist at any given time.
+If Python searches for a name it does in the following order:
+local -> enclosing -> global -> built-in
+Thats how **scope** is created.
+
+
+
+
+### Special case: Interned objects
+
+Python pre-creates a certain subset of objects in memory and keeps them in the global *namespace*.
+Which depends on the implementation (e.g. CPython 3.7 pre-creates integers from -5 to 256 and strings 
+with less than 20 characters that contain ASCII letters, digits or underscores only.
+This way, python prevents memory allocation calls for likely and consistently used objects.
+We can see this by running the following:
+```python
+x = 100
+y = 100
+y is x
+z = 90 + 10
+z is x
+```
+All of these return `True, because the object `100` is a *interned object*.
+This:
+```python
+x = 1000000
+y = 1000000
+x is y
+```
+would return False, as the value `1000000`is not interned. Here, a new object would be created.
+
+NOTE: If you are using VSCode to check this, you might get different results. Try using the Python Terminal itself.
+<!-- Why is that? -->
+
+
+## Pass by assignement
+
 
 
 ## Pythons object model
