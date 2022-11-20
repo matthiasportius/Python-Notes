@@ -182,12 +182,12 @@ def main():
     x = 100
     print(f"Initial adress of x: {id(x)}")
     increment(x)
-    print(f"   Final adress of x: {id(x)}")
+    print(f"Final adress of x: {id(x)}")
 
-def increment(y)
+def increment(y):
     print(f"Initial adress of y: {id(y)}")
     y += 1
-    print(f"   Final adress of y: {id(y)}")
+    print(f"Final adress of y: {id(y)}")
 
 main()
 ```
