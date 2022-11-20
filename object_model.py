@@ -1,73 +1,66 @@
 # python has no pointers (=variables that hold memory adresses of another variable)
-# Pythons object model: everythin in python is an object
-# proof:
-def foo():
-    pass
 
-l = [
-    isinstance(1, object), 
-    isinstance(True, object),
-    isinstance(list(), object),
-    isinstance("Hello", object),
-    isinstance(foo, object)
-    ]
+# proof that everything in Python is an object:
+class Everything_is_objects():
+    @staticmethod
+    def foo():
+        pass
 
-for o in l:
-    print(o, end=" ")
-print()
+    @classmethod
+    def test(cls):
+        # int, bool, list, str, function are all objects in Python!
+        l = [1, True, list(), "Hello", cls.foo]
 
-# each object contains at least three types of data: reference count, type, value
-# there are two types of objects: mutable(list, set, dict) and immutable
-x = 5
-s = "hi"
-print(x, id(x))
-print(s, id(s))
-# if you try to modify immutable objects (like int or str) you get new object
-x += 1
-s += "world"
-print(x, id(x))
-print(s, id(s))
-# this also shows when directly modifying immutable objects like str:
-try:
-    s[0] = "A"
-except TypeError:
-    print("str is immutable")
+        for o in l:
+            print(f"{o} is an {'object' if isinstance(o, object) else 'not an object'}")
+        print(end="\n"*2)
 
-# for mutable objects the id stays the same:
-l = [1, 2, 3]
-print(l, id(l))
-l.append(4)
-l[0] = 0
-print(l, id(l))
 
-# in python one does not create "variables" but "names"
-# what does this mean?
-# when i do:
-x = 1
-# i do these steps:
-# 1 create a PyObject in C (as a C struct)
-# 2 Set the typecode to integer for the PyObject
-# 3 set value to 1 for the PyObject
-# 4 create a "name" called "x"
-# point x to the new PyObject
-# increase  the refcount of the PyObject by 1
+Everything_is_objects.test()
 
-# so x is only a "name" pointing to the real object with type, value and refcount
-# so x does not directly "own" any memory adress like variables in C, the PyObject does
-# so when I do this:
-x = 3
-# then I do:
-# 1 create a new PyObject
-# 2 Set the typecode to integer for the PyObject
-# 3 set value to 3 for the PyObject
-# 4 point x to the new PyObject
-# 5 increase  the refcount of the new PyObject by 1
-# 6 decrease  the refcount of the old PyObject by 1 (if ref count is 0 it gets cleaned up by the garbage collector)
-y = x
-# this would not create a new objectm just a new name that points to the
-# existing PyObject, increasing its refcount by 1
-# is checks if these two refer to the same object:
-y is x  # returns True
+
+
+class Modify_objects():
+    x = 5
+    s = "hi"
+
+    # if you try to modify immutable objects (like int or str) you get new objects
+    def modify_immutable():    
+        x = 5
+        s = "hi"
+        print("----Before modification----")
+        print(f"The adress of x is", id(x))
+        print(f"The adress of s is", id(s))
+        print()
+
+        x += 1
+        s += "world"
+        print("----After modification----")
+        print(f"The adress of x is", id(x))
+        print(f"The adress of s is", id(s), end="\n"*2)
+
+        # immutable objects can therefore not be modifyed
+        try:
+            s[0] = "A"
+        except TypeError:
+            print("str is immutable", end="\n"*2)
+        print()
+
+    # for mutable objects the id stays the same:
+    def modify_mutable():
+        l = [1, 2, 3]
+        print("----Before modification----")
+        print("The id of l is", id(l), end="\n"*2)
+        l.append(4)
+        l[0] = 0
+        print("----After modification----")
+        print("The if of l is", id(l), end="\n"*2)
+        print()
+
+
+Modify_objects.modify_immutable()
+Modify_objects.modify_mutable()
+
 
 # interned objects: Python pre-creates a certain subset of objexts in memory 
 # and keps them in the global namespace to use
