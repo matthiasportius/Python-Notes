@@ -1,4 +1,3 @@
-<!-- Add links to relevant .py files as crossreff to headers -->
 # Python-Notes
 
 This repository is a collection of intermediate Python concepts which I am currently studying.
@@ -6,14 +5,13 @@ It shall provide a succinct compilation of (in my mind) important concepts and f
 of the programming language Python.
 
 
-## The Zen of Python
+## The Zen of Python<sub><sup><sup>[[py]](zen_of_python.py)</sup></sup></sup>
 
 If in doubt at any point, always remember the **Zen of Python**.
 Just [`import this`](https://peps.python.org/pep-0020/).
-You are of course also free to use this [file](zen_of_python.py).
 
 
-## Pythons object model
+## Pythons object model<sub><sup><sup>[[py]](object_model.py)</sup></sup></sup>
 
 **Everything** in Python **is an object**.
 You can proof this quite easily:
@@ -32,6 +30,8 @@ l = [
 for o in l:
     print(o, end=" ")
 print()
+
+# 
 ```
 
 Actually the underlying implementation of variables and such is a [**`PyObject`**](https://stackoverflow.com/a/27683778),
@@ -163,14 +163,14 @@ x is y
 ```
 would return False, as the value `1000000`is not interned. Here, a new object would be created.
 
-NOTE: If you are using VSCode to check this, you might get different results. Try using the Python Terminal itself.
+> NOTE: If you are using VSCode to check this, you might get different results. Try using the Python Terminal itself.
 <!-- Why is that? -->
 <!-- if i assign a name to a immutable object which already exists at a memory location it seems to be retrieved in VSCode --> 
 
 
-## Pass by assignement
+## Pass by assignement<sub><sup><sup>[[py]](pass_by_assignement.py)</sup></sup></sup>
 
-**Pass:** Provide argument to a function
+**Pass:** Provide argument to a function  
 
 **Pass by reference:** argument is a reference to a variable that already exists in memory
 
@@ -201,7 +201,7 @@ After the `increment` function is terminated, the local `y` name is cleaned up a
 
 ### Pass by reference in Python
 
-So how do you pass by reference in Python? Easy, just return one or multiple arguments (default: returned as tuple, but also list or dict possible). 
+So how do you pass by reference in Python? Easy, just return one or multiple arguments.
 ```python
 def main()
     x = 0
@@ -212,31 +212,13 @@ def main()
 
 def f(a, x): 
     return f"{a} World!", x+1
+
+main()
 ```
-
-
-## Pythons object model
-
-**bold text** __bold text__
-*italic* _italic_
-~~strikethrough~~
-<sub>Subscript</sub>
-<sup>Superscript</sup>
-> Quoted text
-`code` or `command`
-```
-code block
-```
-[inline link](URL) e.g. (object_model.py)
-* unordered list item 1
-* 2
-* 3
-
-1. ordered list item 1
-   * unordered 1.1
-     * unordered 1.1.1
-2. 2
-3. 3
+Multiple values are returned as a **tuple** by default but can also be returned as a list or dict by enclosing in `[]` or `{}`, respectively.
 
 
 ## Returning values
+
+
+<!-- add two or more spaces after text to get a linebreak -->
