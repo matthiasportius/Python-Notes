@@ -1,3 +1,4 @@
+<!-- run linter over files -->
 # Python-Notes
 
 This repository is a collection of intermediate Python concepts which I am currently studying.
@@ -30,8 +31,6 @@ l = [
 for o in l:
     print(o, end=" ")
 print()
-
-# 
 ```
 
 Actually the underlying implementation of variables and such is a [**`PyObject`**](https://stackoverflow.com/a/27683778),
@@ -218,7 +217,17 @@ main()
 Multiple values are returned as a **tuple** by default but can also be returned as a list or dict by enclosing in `[]` or `{}`, respectively.
 
 
-## Returning values
+## Returning values<sub><sup><sup>[[py]](return_values.py)</sup></sup></sup>
+
+### Generators
+
+Any function containing `yield` is a generator function. (Pythons bytecode compiler detects this and compiles the function specially)
+Generators are used if resources of a function become too large. They are kind of a "resumable function", meaning they resumes where they left of.
+On reaching `yield` the generators state of execution is suspended and local variables are preserved. In the next call to the generator, its `__next__` method is called and resumes the function. (`__next__` is called implicitly by a for loop, see example)  
+Generator functions return a generator object that supports the iterator protocol (instead of a single value like with `return`).
+
+### Walruses
+A new feature in Python 3.8 to assign variables within expressions. It looks like a walrus `:=`.
 
 
 <!-- add two or more spaces after text to get a linebreak -->
