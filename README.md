@@ -237,9 +237,9 @@ Select Python Interpreter: `Ctr+Shift+P` > **Python: Select Interpreter**
 ## Virtual environment
 
 By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (symlink) of the interpreter. Any packages are installed only in that subfolder.  
-GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**
+GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**  
 Terminal: `python -m venv .venv`  
-Select "Yes" in Prompt.
+Select "Yes" in Prompt.  
 Install packages: `pip install package`  
 Create a `requirements.txt` with command `pip freeze > requirements.txt` This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
 
