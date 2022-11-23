@@ -1,4 +1,4 @@
-<!-- run linter over files -->
+<!-- run linter over files (e.g. black -->
 # Python-Notes
 
 This repository is a collection of intermediate Python concepts which I am currently studying.
@@ -229,5 +229,24 @@ Generator functions return a generator object that supports the iterator protoco
 ### Walruses
 A new feature in Python 3.8 to assign variables within expressions. It looks like a walrus `:=`.
 
+## Starting a new project in VSCode
+
+In Terminal: `mkdir directory_name` > `cd directory_name` > `code .`(or in GUI: **File** > **Open Folder**)  
+Select Python Interpreter: `Ctr+Shift+P` > **Python: Select Interpreter**
+
+## Virtual environment
+
+By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (symlink) of the interpreter. Any packages are installed only in that subfolder.  
+GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**
+Terminal: `python -m venv .venv`  
+Select "Yes" in Prompt.
+Install packages: `pip install package`  
+Create a `requirements.txt` with command `pip freeze > requirements.txt` This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
+
+
 
 <!-- add two or more spaces after text to get a linebreak -->
+
+<!-- type hints cheat sheet -->
+<!-- useful modules/packages (mypy) -->
+<!-- best practices --> 
