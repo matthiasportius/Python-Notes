@@ -240,7 +240,9 @@ By default, the Python interpreter runs in its global environment. Packages inst
 GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**  
 Terminal: `python -m venv .venv`  
 Select "Yes" in Prompt.  
-Install packages: `pip install package`  
+`.venv\scripts\activate` - if command genereates "Activate.ps1 is not digitially signed. You cannot run this script on the current system." ("...kann nicht geladen werden, ...") then temporarily change PowerShell execution policy to allow scripts to run. You can see the current execution policy with `Get-ExecutionPolicy` and change it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`, then run the command and change it back.  
+Python Interpreter of venv should be selected, if not `Ctr+Shift+P` > **Python: Select Interpreter** and choose venv one.
+Install packages: `pip install package` or `python [-m](https://peps.python.org/pep-0338/) pip install package`
 Create a `requirements.txt` with command `pip freeze > requirements.txt` This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
 
 
