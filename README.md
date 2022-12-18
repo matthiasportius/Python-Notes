@@ -250,5 +250,5 @@ Create a `requirements.txt` with command `pip freeze > requirements.txt` This de
 <!-- add two or more spaces after text to get a linebreak -->
 
 <!-- type hints cheat sheet -->
-<!-- useful modules/packages (mypy) -->
+<!-- useful modules/packages (mypym os, requests) -->
 <!-- best practices --> 
