@@ -252,3 +252,4 @@ Create a `requirements.txt` with command `pip freeze > requirements.txt` This de
 <!-- type hints cheat sheet -->
 <!-- useful modules/packages (mypym os, requests) -->
 <!-- best practices --> 
+<!-- style guides (PEP8) -->
