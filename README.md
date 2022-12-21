@@ -1,4 +1,3 @@
-<!-- run linter over files (e.g. black -->
 # Python-Notes
 
 This repository is a collection of intermediate Python concepts which I am currently studying.
@@ -270,11 +269,38 @@ __Install packages:__ `pip install package` or `python [-m](https://peps.python.
 __Create a `requirements.txt`:__ `pip freeze > requirements.txt`  
 This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
 
+## Type hints
+
+Since [PEP484](https://peps.python.org/pep-0484/) and PEP483 type hints are a way to annotate types. (Easier) Static analysis (analysis of source code without running it) is one benefit of these hints.  
+Here is a cheat sheet of these type hints:
+
+&emsp;&emsp;&emsp;TODO
+
+## Interesting modules
+
+### os 
+
+&emsp;&emsp;&emsp;TODO
+
+### mypy
+
+&emsp;&emsp;&emsp;TODO
+
+### requests
+
+&emsp;&emsp;&emsp;TODO
+
+## Best practices
+
+&emsp;&emsp;&emsp;TODO
+
+## Style guides
+
+&emsp;&emsp;&emsp;TODO <!-- see PEP8 -->
 
 
-<!-- add two or more spaces after text to get a linebreak -->
 
-<!-- type hints cheat sheet -->
-<!-- useful modules/packages (mypym os, requests) -->
-<!-- best practices --> 
-<!-- style guides (PEP8) -->
+<!-- 
+Notes:
+add two or more spaces after text to get a linebreak 
+-->
