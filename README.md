@@ -238,7 +238,7 @@ On reaching `yield` the generators state of execution is suspended and local var
 Generator functions return a generator object that supports the iterator protocol (instead of a single value like with `return`).
 
 ### Walruses
-A new feature in Python 3.8 to assign variables within expressions. It looks like a walrus `:=`.
+A new feature in Python [3.8](https://docs.python.org/3/whatsnew/3.8.html) to assign variables within expressions. It looks like a walrus `:=`.
 
 ## Starting a new project in VSCode
 
