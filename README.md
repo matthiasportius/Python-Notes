@@ -33,9 +33,8 @@ for o in l:
 print()
 ```
 
-Actually the underlying implementation of variables and such is a [**`PyObject`**](https://stackoverflow.com/a/27683778),
-which is also why Python has no pointers like C.
-Each of these objects contains at least **three types of data**:
+Actually the underlying implementation of variables and such is a [**`PyObject`**](https://stackoverflow.com/a/27683778).
+Each of these `PyObject`s contains at least **three types of data**:
 * reference count
 * type
 * value
@@ -77,6 +76,8 @@ print(l, id(l))
 ### Names, not variables
 
 In Python one does not create *variables* but *names*.
+This is also part of why Python does not use pointers like C does (although it is more of a design choice that pointers do not exist in Python.
+The *name* points to a `PyObject` holding the actual value.
 When I do: `x = 1` these steps are performed:
 1. Create a [`PyObject`](https://docs.python.org/3/c-api/structures.html#c.PyObject) in C (as a C `struct`)
 2. Set the type of the `PyObject` to integer
@@ -85,11 +86,16 @@ When I do: `x = 1` these steps are performed:
 5. Point `x` to the new `PyObject`
 6. Increase the reference count of the `PyObject`by 1
 
-So `x` is only a *name* pointing to the "real" object with type, value and refcount.
+Whereas in C `int x = 1` would do:
+1. Allocate enough memory for an integer
+2. Assign the value `1` to that memory location
+3. Indicate that x points to `1`
+
+So in Python, `x` is only a *name* pointing to the "real" object with type, value and refcount.
 That means `x` does not directly "own" any memory adress like a variable in C.
 The PyObject does.
 
-So what happens when I re-assign the variable `x = 3` is:
+So what happens when I re-assign the variable `x = 3` in Python is:
 1. Create a new PyObject
 2. Set the type of the `PyObject` to integer
 3. Set the value of the `PyObject` to `3`
@@ -97,6 +103,9 @@ So what happens when I re-assign the variable `x = 3` is:
 5. Increase the reference count of the new `PyObject`by 1
 6. Decrease the reference count of the old `PyObject`by 1
    * If the reference count is 0 the object gets cleaned up by the garbage collector
+
+If i would do `x = 3` in C it would just assign the new value `3` to the *variable* `x` (overwriting the previous value while not changing the memory location).
+This is why `x` is __mutable in C__ but __immutable in Python__.
 
 Doing `y = x` would not create a new object, just a new name that points to the 
 existing `PyObject`, increasing its refcount by 1.
