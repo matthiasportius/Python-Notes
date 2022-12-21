@@ -38,7 +38,7 @@ Each of these `PyObject`s contains at least **three types of data**:
 * reference count
 * type
 * value
-<img src="https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png" alt="PyObject scheme" align="center" width="65%" />
+<img src="https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png" alt="PyObject scheme" align="center" width="65%" title="Schematic representation of data in memory" />
 <!-- also possible: 
 ![PyObject scheme](https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png?raw=true)
 -->
@@ -242,19 +242,33 @@ A new feature in Python 3.8 to assign variables within expressions. It looks lik
 
 ## Starting a new project in VSCode
 
-In Terminal: `mkdir directory_name` > `cd directory_name` > `code .`(or in GUI: **File** > **Open Folder**)  
+In Terminal:  
+`mkdir directory_name` > `cd directory_name` > `code .`  
+(or in GUI: **File** > **Open Folder**)  
+
 Select Python Interpreter: `Ctr+Shift+P` > **Python: Select Interpreter**
 
 ## Virtual environment
 
 By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (symlink) of the interpreter. Any packages are installed only in that subfolder.  
+
 GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**  
 Terminal: `python -m venv .venv`  
+
 Select "Yes" in Prompt.  
-`.venv\scripts\activate` - if command genereates "Activate.ps1 is not digitially signed. You cannot run this script on the current system." ("...kann nicht geladen werden, ...") then temporarily change PowerShell execution policy to allow scripts to run. You can see the current execution policy with `Get-ExecutionPolicy` and change it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`, then run the command and change it back.  
-Python Interpreter of venv should be selected, if not `Ctr+Shift+P` > **Python: Select Interpreter** and choose venv one.
-Install packages: `pip install package` or `python [-m](https://peps.python.org/pep-0338/) pip install package`
-Create a `requirements.txt` with command `pip freeze > requirements.txt` This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
+
+Terminal: `.venv\scripts\activate`  
+
+If command genereates: "Activate.ps1 is not digitially signed. You cannot run this script on the current system." ("...kann nicht geladen werden, ...") then temporarily change PowerShell execution policy to allow scripts to run.  
+You can see the current execution policy with `Get-ExecutionPolicy` and change it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`, then run the command and change it back.
+
+Python Interpreter of venv should be selected.  
+If not: `Ctr+Shift+P` > **Python: Select Interpreter** and choose venv one.
+
+__Install packages:__ `pip install package` or `python [-m](https://peps.python.org/pep-0338/) pip install package`
+
+__Create a `requirements.txt`:__ `pip freeze > requirements.txt`  
+This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
 
 
 
