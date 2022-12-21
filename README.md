@@ -38,8 +38,10 @@ Each of these `PyObject`s contains at least **three types of data**:
 * reference count
 * type
 * value
-<!-- Add schema of a PyObject with its name here -->
-
+<img src="https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png" alt="PyObject scheme" align="center" width="65%" />
+<!-- also possible: 
+![PyObject scheme](https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png?raw=true)
+-->
 
 ### Python objects
 
@@ -76,7 +78,7 @@ print(l, id(l))
 ### Names, not variables
 
 In Python one does not create *variables* but *names*.
-This is also part of why Python does not use pointers like C does (although it is more of a design choice that pointers do not exist in Python.
+This is also part of why Python does not use pointers like C does (although it is more of a design choice that pointers do not exist in Python).
 The *name* points to a `PyObject` holding the actual value.
 When I do: `x = 1` these steps are performed:
 1. Create a [`PyObject`](https://docs.python.org/3/c-api/structures.html#c.PyObject) in C (as a C `struct`)
