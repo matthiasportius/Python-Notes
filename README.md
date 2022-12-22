@@ -281,6 +281,13 @@ Here is a cheat sheet of these type hints:
 ### [argparse](https://docs.python.org/3/library/argparse.html)
 
 For implementing command-line interfaces
+```python
+parser = argparse.ArgumentParser(description="Test case")
+parser.add_argument("-f", "--flag", default="test" help="A test flag", type="str")
+args = parser.parse_args()
+
+print(args.flag)
+```
 
 ### os 
 
@@ -316,6 +323,8 @@ For creating a folder full of test files the folder needs an `__init__` file (ca
 `mkdir test` > `code test/__init__.py` > `code test/test_file_1` 
 
 ### mypy
+
+Makes sure that all variables are of the right type, by referring to your type hints.
 
 &emsp;&emsp;&emsp;TODO
 
@@ -362,6 +371,44 @@ numbers_set = set()
 for number in numbers:
     numbers_set.append(number)
 ```
+
+#### Unpacking 
+
+Unpacking is:  
+`x, y, z = [1, 2, 3]`
+But there are other ways to do so
+
+`*` unpacks a variable
+```python
+def total(first, second, third):
+    return (first * 11 + second) * 22 + third
+
+values = [10, 5, 3]
+
+print(total(*values))
+```
+or
+```python
+list = ["Hi", "I", "am", "a", "list"]
+print(*list)
+```
+If passing the variables in different orders is necessary one could use dictionaries as follows:
+```python
+def total(first, second, third):
+    return (first * 11 + second) * 22 + third
+
+values = {"first": 10, "second": 5, "third": 3}
+
+print(total(**values)
+```
+Unpacking dictonaries provides both keys and values. One could think of the `**values` 
+above being passed to total like `total(first=10, second=5, third=3)`
+
+#### Accepting multiple arguments
+
+In contrast to unpacking, one could also use the same syntax to let a function accept multiple values:  
+`def function(*args, **kwargs)`  
+with `*args` for accepting multiple positional arguments and `**kwargs` for accepting multiple named arguments.
 
 
 <!-- 
