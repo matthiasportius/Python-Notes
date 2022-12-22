@@ -375,8 +375,8 @@ for number in numbers:
 #### Unpacking 
 
 Unpacking is:  
-`x, y, z = [1, 2, 3]`
-But there are other ways to do so
+`x, y, z = [1, 2, 3]`  
+But there are other ways to do so:
 
 `*` unpacks a variable
 ```python
