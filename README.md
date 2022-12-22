@@ -296,7 +296,24 @@ Here is a cheat sheet of these type hints:
 
 ## Style guides
 
+[PEP8](https://peps.python.org/pep-0008/) describes the Style Guide for Python.  
+One thing described here is a maximum line length of 79 characters.  
+> The preferred way of wrapping long lines is by using Python’s implied line continuation inside parentheses, brackets and braces. Long lines can be broken over multiple lines by wrapping expressions in parentheses.  
+
+This could be done as follows:
+```python
+print (
+    "This is a line break for a otherwise "
+    "very long string which would be "
+    "over 79 characters long"
+    )
+```
+Since Python strings will automatically concatenate when not separated by a comma, we do not need a `+` or call `join()`.
+
 &emsp;&emsp;&emsp;TODO <!-- see PEP8 -->
+
+## Miscellaneous
+
 
 
 
