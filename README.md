@@ -247,7 +247,7 @@ In Terminal:
 
 Select Python Interpreter: `Ctr+Shift+P` > **Python: Select Interpreter**
 
-## Virtual environment
+### Virtual environment
 
 By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (symlink) of the interpreter. Any packages are installed only in that subfolder.  
 
@@ -269,10 +269,14 @@ __Install packages:__ `pip install package` or `python [-m](https://peps.python.
 __Create a `requirements.txt`:__ `pip freeze > requirements.txt`  
 This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
 
+### Enabling source control
+
+&emsp;&emsp;&emsp;TODO
+
 ## Type hints
 
 Since [PEP484](https://peps.python.org/pep-0484/) and PEP483 type hints are a way to annotate types. (Easier) Static analysis (analysis of source code without running it) is one benefit of these hints.  
-Here is a cheat sheet of these type hints:
+A cheat sheet of these type hints can be found here: [Type hints cheat sheet]()
 
 &emsp;&emsp;&emsp;TODO
 
