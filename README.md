@@ -278,7 +278,22 @@ Here is a cheat sheet of these type hints:
 
 ## Interesting modules
 
+### [argparse](https://docs.python.org/3/library/argparse.html)
+
+For implementing command-line interfaces
+
 ### os 
+
+#### Convert relative to absolute path
+
+This can be done in many ways:
+```python
+dirname = os.path.dirname(__file__)
+full_path = os.path.join(dirname, "relative/path/to/file")
+
+full_path = os.path.abspath("relative/path/to/file"
+```
+Using absolute paths instead of relative ones ensures portability.
 
 &emsp;&emsp;&emsp;TODO
 
