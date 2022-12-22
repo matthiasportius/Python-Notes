@@ -276,13 +276,15 @@ Here is a cheat sheet of these type hints:
 
 &emsp;&emsp;&emsp;TODO
 
-## Interesting modules
+## Interesting libraries modules
 
 ### [argparse](https://docs.python.org/3/library/argparse.html)
 
 For implementing command-line interfaces
 
 ### os 
+
+For working with the operating system.
 
 #### Convert relative to absolute path
 
@@ -296,6 +298,22 @@ full_path = os.path.abspath("relative/path/to/file"
 Using absolute paths instead of relative ones ensures portability.
 
 &emsp;&emsp;&emsp;TODO
+
+### pytest
+
+Library to unit test your program.
+```python
+import pytest
+from project import square
+
+def test_square():
+    assert square(2) == 4
+    assert square(3) == 9
+    with pytest.raises(TypeError):
+        square("2")
+```
+For creating a folder full of test files the folder needs an `__init__` file (can be empty), e.g.:  
+`mkdir test` > `code test/__init__.py` > `code test/test_file_1` 
 
 ### mypy
 
