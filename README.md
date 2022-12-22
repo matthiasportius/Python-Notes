@@ -345,9 +345,23 @@ Since Python strings will automatically concatenate when not separated by a comm
 
 &emsp;&emsp;&emsp;TODO <!-- see PEP8 -->
 
+<!-- Other things: Constants capitalized, varibales snake_case, ... -->
+
 ## Miscellaneous
 
+#### Eliminating duplicates
 
+```python
+numbers = [1,2,4,2,1,5,6,7,1,2,5]
+numbers = set(numbers)
+```
+or
+```python
+numbers = [1,2,4,2,1,5,6,7,1,2,5]
+numbers_set = set()
+for number in numbers:
+    numbers_set.append(number)
+```
 
 
 <!-- 
