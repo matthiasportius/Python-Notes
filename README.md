@@ -357,6 +357,10 @@ To run application (e.g. `project.py`) use `flask --app project run` or `python 
 Enable debug mode with `flask --app project run --debug`. With this, the server will automatically reload if code changes and an interactive debugger will show if errors occur during requests.
 > NOTE: Don't use debug mode in production, as it is a major security risk (allows executing Python code form browser)
 
+#### Jinja2
+
+Flask configures the Jinja2 template engine automatically. It can be used to generate any type of text file (HTML pages, markdown, plain text for emails, ...).
+
 ### mypy
 
 Makes sure that all variables are of the right type, by referring to your type hints.
