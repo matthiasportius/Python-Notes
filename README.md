@@ -276,7 +276,7 @@ This describes packages installed, so others can easily install them with `pip i
 ## Type hints
 
 Since [PEP484](https://peps.python.org/pep-0484/) and PEP483 type hints are a way to annotate types. (Easier) Static analysis (analysis of source code without running it) is one benefit of these hints.  
-A cheat sheet of these type hints can be found here: [Type hints cheat sheet]()
+A cheat sheet of these type hints can be found here: [Type hints cheat sheet](type_hints.py)
 
 &emsp;&emsp;&emsp;TODO
 
@@ -414,6 +414,20 @@ In contrast to unpacking, one could also use the same syntax to let a function a
 `def function(*args, **kwargs)`  
 with `*args` for accepting multiple positional arguments and `**kwargs` for accepting multiple named arguments.
 
+#### Positional-only and Keyword-only arguments
+
+Positional-only arguments come before a `/`.  
+Keyword-only arguments come after a `*`.  
+If none of these two are present inside the function definition,
+arguments may be passed by position or keyword.
+```python
+def f(x_pos, /, x_both, *, x_kwd):
+  pass
+```
+Calling the function with `f(x_pos=1, 2, x_kwd=3)`
+would give us an error. Same as calling the function
+with `f(1, 2, 3)`. The following two calls would be
+valid: `f(1, 2, x_kwd=3)` and `f(1, x_both=2, x_kwd=3)`.
 
 <!-- 
 Notes:
