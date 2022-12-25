@@ -345,6 +345,17 @@ First argument of `Flask()` is name of applications module/package, so that Flas
 
 `route()` decorator to tell Flask what URL should trigger the decorated function.  
 
+> NOTE: Don't call application flask.py, because this would conflict with Flask itself.
+
+To run application (e.g. `project.py`) use `flask --app project run` or `python -m flask --app project run`.
+`--app` tells Flask where application is. If file is named `app.py` or `wsgi.py` then `--app` is not necessary.
+`run` command starts development server.
+> NOTE: If another program is already using the standard port 5000, use `netstat -ano | findstr 5000 to find process id or just run flask app on another port with `flask -run --port 5001`.
+
+#### debug mode
+
+Enable debug mode with `flask --app project run --debug`. With this, the server will automatically reload if code changes and an interactive debugger will show if errors occur during requests.
+> NOTE: Don't use debug mode in production, as it is a major security risk (allows executing Python code form browser)
 
 ### mypy
 
