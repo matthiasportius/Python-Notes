@@ -337,8 +337,10 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 ```
-Instance of `Flask` class `app` will be WSGI application. (WSGI = Web Server Gateway Interface - Specification that describes how server and application communicate)  
+Instance of `Flask` class "`app`" will be WSGI application. (WSGI = Web Server Gateway Interface - Specification that describes how server and application communicate)  
 Server and application Interfaces are specified in PEP 3333 which tries to standardize both so that any application written to the WSGI specification will run on any server written to the WSGI specification. It is a way to unifying the many web frameworks of Python, increasing compatibility and portability.  
+First argument of `Flask()` is name of applications module/package, so that Flask knows where to look for resources. Convenient shortcut for most cases is `__name__` (name of currently running python script/module, `"__main__"` when file is run as main program (with `python program.py`), `"program"` if it is imported)  
+`route()` decorator to tell Flask what URL should trigger the decorated function.  
 
 
 ### mypy
