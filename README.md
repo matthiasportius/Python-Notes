@@ -326,6 +326,21 @@ def test_square():
 For creating a folder full of test files the folder needs an `__init__` file (can be empty), e.g.:  
 `mkdir test` > `code test/__init__.py` > `code test/test_file_1` 
 
+### [flask](https://flask.palletsprojects.com/en/2.2.x/)
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.rout("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+```
+Instance of `Flask` class `app` will be WSGI application. (WSGI = Web Server Gateway Interface - Specification that describes how server and application communicate)  
+Server and application Interfaces are specified in PEP 3333 which tries to standardize both so that any application written to the WSGI specification will run on any server written to the WSGI specification. It is a way to unifying the many web frameworks of Python, increasing compatibility and portability.  
+
+
 ### mypy
 
 Makes sure that all variables are of the right type, by referring to your type hints.
