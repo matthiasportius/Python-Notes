@@ -359,7 +359,7 @@ Enable debug mode with `flask --app project run --debug`. With this, the server 
 
 #### Jinja2
 
-Flask configures the Jinja2 template engine automatically. It can be used to generate any type of text file (HTML pages, markdown, plain text for emails, ...).  
+Flask configures the Jinja2 template engine automatically. It can be used to generate any type of text file (HTML pages, markdown, plain text for emails, ...).  Jinja uses `{% ... %}` for statements,`{{ ... }}` for expressions and `{# ... #}` for comments.
 For example, templates can be passed to the `render_template()` function as Jinja2 templates as 
 ```python
 @app.route("/hello"/)
