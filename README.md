@@ -333,7 +333,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.rout("/")
+@app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 ```
@@ -378,6 +378,21 @@ with a Jinja2 template like:
     <h1>Hello, World!</h1>
 {% endif %}
 ```
+
+#### Safety
+
+When returning HTML, user-provided values need to be escaped.
+In the example `<name>` is captured as a value from the URL and passed to the view function.
+```python
+from markupsafe import escape
+
+@app.route("/<name>")
+def hello(name):
+    return f"Hello, {escape(name)}!"
+```
+If `escape()` is not used here, the site would be open to an **injection attack** by entering
+an url like `example-site.com/<script>alert("bad")</script>`. Instead it is rendered as a normal text here.
+Jinja does that automatically if the value is inserted like `{{ name }}`.
 
 ### mypy
 
