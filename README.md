@@ -497,6 +497,12 @@ would give us an error. Same as calling the function
 with `f(1, 2, 3)`. The following two calls would be
 valid: `f(1, 2, x_kwd=3)` and `f(1, x_both=2, x_kwd=3)`.
 
+#### Decorators
+
+&emsp;&emsp;&emsp;TODO
+
+
+
 <!-- 
 Notes:
 add two or more spaces after text to get a linebreak 
