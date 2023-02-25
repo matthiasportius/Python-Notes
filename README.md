@@ -1,8 +1,9 @@
 # Python-Notes
 
-This repository is a collection of intermediate Python concepts which I am currently studying.
+This repository is a collection of beginner to intermediate Python concepts which I am currently studying.
 It shall provide a succinct compilation of (in my mind) important concepts and features
-of the programming language Python.
+of the programming language Python.  
+The <sup>[py]</sup> after a heading links to example code for this section.
 
 
 ## The Zen of Python<sub><sup><sup>[[py]](zen_of_python.py)</sup></sup></sup>
@@ -37,6 +38,9 @@ Each of these `PyObject`s contains at least **three types of data**:
 * reference count
 * type
 * value
+
+To illustrate this, the following shows a schematic comparison of how a variable is represented in memory by **C** and **Python**.  
+
 <img src="https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png" alt="PyObject scheme" align="center" width="65%" title="Schematic representation of data in memory" />
 <!-- also possible: 
 ![PyObject scheme](https://github.com/matthiasportius/Python-Notes/blob/master/PyObject_scheme.png?raw=true)
@@ -44,7 +48,7 @@ Each of these `PyObject`s contains at least **three types of data**:
 
 ### Python objects
 
-There are **two types of objects**:
+Since everything in Python is an object. It is useful to know that there are **two types of objects**:
 * **mutable**
   * list, set, dict
 * **immutable**
@@ -78,7 +82,7 @@ print(l, id(l))
 
 In Python one does not create *variables* but *names*.
 This is also part of why Python does not use pointers like C does (although it is more of a design choice that pointers do not exist in Python).
-The *name* points to a `PyObject` holding the actual value.
+The *name* points to a `PyObject` holding the actual value, as previously shown in the [scheme](#pythons-object-modelpy).
 When I do: `x = 1` these steps are performed:
 1. Create a [`PyObject`](https://docs.python.org/3/c-api/structures.html#c.PyObject) in C (as a C `struct`)
 2. Set the type of the `PyObject` to integer
@@ -94,9 +98,9 @@ Whereas in C `int x = 1` would do:
 
 So in Python, `x` is only a *name* pointing to the "real" object with type, value and refcount.
 That means `x` does not directly "own" any memory adress like a variable in C.
-The PyObject does.
+The `PyObject` does.
 
-So what happens when I re-assign the variable `x = 3` in Python is:
+So what happens when I re-assign the previous variable with `x = 3` in Python is:
 1. Create a new PyObject
 2. Set the type of the `PyObject` to integer
 3. Set the value of the `PyObject` to `3`
@@ -108,11 +112,11 @@ So what happens when I re-assign the variable `x = 3` in Python is:
 If i would do `x = 3` in C it would just assign the new value `3` to the *variable* `x` (overwriting the previous value while not changing the memory location).
 This is why `x` is __mutable in C__ but __immutable in Python__.
 
-Doing `y = x` would not create a new object, just a new name that points to the 
+By this logic, doing `y = x` would not create a new `PyObject`, just a new name that points to the 
 existing `PyObject`, increasing its refcount by 1.
 This can be tested with [`is`](https://stackoverflow.com/a/133024) 
 which checks if two names refer to the same object: `y is x` returns `True`.
-`sys.getrefcount("1")` before and after the assignement shows the increase of the reference count by 1.
+`sys.getrefcount("3")` before and after the assignement shows the increase of the reference count by 1.
 
 
 ### Namespaces
@@ -144,7 +148,7 @@ There are **4 types of namespaces** with different lifetimes:
 Many namespaces will exist at any given time.
 If Python searches for a name it does in the following order:
 local -> enclosing -> global -> built-in
-Thats how **scope** is created.
+Thats how __*scope*__ is created.
 
 
 
@@ -154,8 +158,12 @@ Thats how **scope** is created.
 Python pre-creates a certain subset of objects in memory and keeps them in the global *namespace*.
 Which depends on the implementation (e.g. CPython 3.7 pre-creates integers from -5 to 256 and strings 
 with less than 20 characters that contain ASCII letters, digits or underscores only.
-This way, python prevents memory allocation calls for likely and consistently used objects.
-We can see this by running the following:
+If you would create an object with the same value as the *interned object*, you are essentially just creating
+a reference to that pre-existing *interned object*.  
+This way, python prevents multiple memory allocation calls for likely and consistently used objects, therefore saving memory.
+This has also the benefit of performance optimization, as things like string comparison become more efficient now
+(because now the memory addresses are compared and not the content of the string, as described [here](https://docs.python.org/3.2/library/sys.html?highlight=sys.intern#sys.intern) or [here](https://stackoverflow.com/questions/1136826/what-does-sys-intern-do-and-when-should-it-be-used)  
+We can see this interning by running the following:
 ```python
 x = 100
 y = 100
@@ -163,18 +171,19 @@ y is x
 z = 90 + 10
 z is x
 ```
-All of these return `True, because the object `100` is a *interned object*.
+All of these return `True`, because the object `100` is a *interned object*.
 This:
 ```python
 x = 1000000
 y = 1000000
 x is y
 ```
-would return False, as the value `1000000`is not interned. Here, a new object would be created.
+would return `False`, as the value `1000000`is not interned. Here, a new object would be created.
 
 > NOTE: If you are using VSCode to check this, you might get different results. Try using the Python Terminal itself.
 <!-- Why is that? -->
 <!-- if i assign a name to a immutable object which already exists at a memory location it seems to be retrieved in VSCode --> 
+To intern strings urself use `sys.intern()`.
 
 
 ## Pass by assignement<sub><sup><sup>[[py]](pass_by_assignement.py)</sup></sup></sup>
@@ -232,8 +241,8 @@ Multiple values are returned as a **tuple** by default but can also be returned 
 ### Generators
 
 Any function containing `yield` is a generator function. (Pythons bytecode compiler detects this and compiles the function specially)
-Generators are used if resources of a function become too large. They are kind of a "resumable function", meaning they resumes where they left of.
-On reaching `yield` the generators state of execution is suspended and local variables are preserved. In the next call to the generator, its `__next__` method is called and resumes the function. (`__next__` is called implicitly by a for loop, see example)  
+Generators are used if the resources of a function become too large. They are kind of a "resumable function", meaning they resume where they left of.  
+On reaching `yield` the generators state of execution is suspended and local variables are preserved. In the next call to the generator, its `__next__` method is called and resumes the function. (`__next__` is called implicitly by a for loop, as seen in the example of this section)  
 Generator functions return a generator object that supports the iterator protocol (instead of a single value like with `return`).
 
 ### Walruses
@@ -249,7 +258,7 @@ Select Python Interpreter: `Ctr+Shift+P` > **Python: Select Interpreter**
 
 ### Virtual environment
 
-By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (symlink) of the interpreter. Any packages are installed only in that subfolder.  
+By default, the Python interpreter runs in its global environment. Packages installed always land there, making it too crowded over time. A **Virtual environments** is a folder containing a copy (a *symlink*) of the interpreter. Any packages are installed only in that folder.  
 
 GUI: `Ctrl+Shift+P` > **Python: Create Environment** > **Venv**  
 Terminal: `python -m venv .venv`  
@@ -258,33 +267,38 @@ Select "Yes" in Prompt.
 
 Terminal: `.venv\scripts\activate`  
 
-If command genereates: "Activate.ps1 is not digitially signed. You cannot run this script on the current system." ("...kann nicht geladen werden, ...") then temporarily change PowerShell execution policy to allow scripts to run.  
-You can see the current execution policy with `Get-ExecutionPolicy` and change it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`, then run the command and change it back.
+If this command generates: "Activate.ps1 is not digitially signed. You cannot run this script on the current system." (dt.: "...kann nicht geladen werden, ..."), then temporarily change PowerShell's execution policy to allow scripts to run.  
+You can see the current execution policy with `Get-ExecutionPolicy` and change it with `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`, then run the activate command again.  
+You could also change the execution policy back after this.
 
-Python Interpreter of venv should be selected.  
-If not: `Ctr+Shift+P` > **Python: Select Interpreter** and choose venv one.
+The Python Interpreter of venv should be selected.  
+If not: `Ctr+Shift+P` > **Python: Select Interpreter** and choose the venv one.
 
-__Install packages:__ `pip install package` or `python [-m](https://peps.python.org/pep-0338/) pip install package`
+__Install packages:__ `pip install package` or `python -m pip install package`
+> NOTE: For more on the `-m`command line switch see [PEP338](https://peps.python.org/pep-0338/)
 
 __Create a `requirements.txt`:__ `pip freeze > requirements.txt`  
-This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, no need to commit venv to source control)
+This describes packages installed, so others can easily install them with `pip install -r requirements.txt` (with this, there is no need to commit the .venv to source control)
 
-### Enabling source control
+<!-- ### Enabling source control
 
-&emsp;&emsp;&emsp;TODO
+&emsp;&emsp;&emsp;TODO -->
 
 ## Type hints
 
-Since [PEP484](https://peps.python.org/pep-0484/) and PEP483 type hints are a way to annotate types. (Easier) Static analysis (analysis of source code without running it) is one benefit of these hints.  
+Since [PEP484](https://peps.python.org/pep-0484/) and PEP483 type hints are a way to annotate types. (Easier) *Static analysis* (an analysis of source code without running it) is one benefit of these hints.  
 A cheat sheet of these type hints can be found here: [Type hints cheat sheet](type_hints.py)
 
-&emsp;&emsp;&emsp;TODO
+<!-- &emsp;&emsp;&emsp;TODO ? -->
 
-## Interesting libraries modules
+## Interesting modules, packages, libraries or frameworks
+
+> NOTE: The difference between these four is nicely described [here](https://learnpython.com/blog/python-modules-packages-libraries-frameworks/).
 
 ### [argparse](https://docs.python.org/3/library/argparse.html)
 
-For implementing command-line interfaces
+For implementing command-line interfaces.  
+A basic structure can look like this:
 ```python
 parser = argparse.ArgumentParser(description="Test case")
 parser.add_argument("-f", "--flag", default="test" help="A test flag", type="str")
@@ -297,22 +311,22 @@ print(args.flag)
 
 For working with the operating system.
 
-#### Convert relative to absolute path
-
+Upon other things, it can be use to **convert relative to absolute paths**.
 This can be done in many ways:
 ```python
 dirname = os.path.dirname(__file__)
 full_path = os.path.join(dirname, "relative/path/to/file")
 
-full_path = os.path.abspath("relative/path/to/file"
+full_path = os.path.abspath("relative/path/to/file")
 ```
 Using absolute paths instead of relative ones ensures portability.
 
-&emsp;&emsp;&emsp;TODO
+&emsp;&emsp;&emsp;TODO: Add further useful examples
 
 ### pytest
 
-Library to unit test your program.
+Library to unit test your program.  
+A basic structure can look like this:
 ```python
 import pytest
 from project import square
@@ -323,10 +337,14 @@ def test_square():
     with pytest.raises(TypeError):
         square("2")
 ```
-For creating a folder full of test files the folder needs an `__init__` file (can be empty), e.g.:  
+To create a folder full of test files the folder needs an `__init__` file (can be empty), e.g.:  
 `mkdir test` > `code test/__init__.py` > `code test/test_file_1` 
 
 ### [flask](https://flask.palletsprojects.com/en/2.2.x/)
+
+A web framework to build web applications.
+
+&emsp;&emsp;&emsp;TODO: Move the following to the Flask App README
 
 ```python
 from flask import Flask
@@ -337,10 +355,10 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 ```
-Instance of `Flask` class "`app`" will be WSGI application. (WSGI = Web Server Gateway Interface - Specification that describes how server and application communicate)  
+Tje instance of the `Flask` class "`app`" will be the WSGI application. (WSGI = Web Server Gateway Interface - Specification that describes how server and application communicate)  
 > NOTE: Server and application Interfaces are specified in PEP 3333 which tries to standardize both so that any application written to the WSGI specification will run on any server written to the WSGI specification. It is a way to unifying the many web frameworks of Python, increasing compatibility and portability.  
 
-First argument of `Flask()` is name of applications module/package, so that Flask knows where to look for resources.  
+The first argument of `Flask()` is the name of the applications module or package, so that Flask knows where to look for resources.  
 > NOTE: Convenient shortcut for most cases is `__name__` (name of currently running python script/module, `"__main__"` when file is run as main program (with `python program.py`), `"program"` if it is imported)
 
 `route()` decorator to tell Flask what URL should trigger the decorated function.  
@@ -379,7 +397,7 @@ with a Jinja2 template like:
 {% endif %}
 ```
 
-#### Safety
+#### Safety concerns
 
 When returning HTML, user-provided values need to be escaped.
 In the example `<name>` is captured as a value from the URL and passed to the view function.
